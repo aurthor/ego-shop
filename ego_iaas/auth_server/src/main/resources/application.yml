@@ -1,0 +1,22 @@
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://aurthor:aurthor@localhost:8761/eureka/}
+  instance:
+    hostname: ${APP_HOST:localhost}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+spring:
+  application:
+    name: auth-server
+  cloud:
+    config:
+      label: master
+      name: auth-server
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: config-server

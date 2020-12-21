@@ -1,0 +1,37 @@
+server:
+  port: ${APP_PORT:8888}
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      discovery:
+        enabled: true   #开启配置文件发现功能
+      server:
+        git:    #配置远端配置文件地址 用户名和密码以及文件夹名称
+          uri: https://gitee.com/aurthor/config.git
+          username: aurthor
+          password: gl2868797
+          search-paths: /**
+  rabbitmq:   #配置rabbitmq
+    addresses: 120.78.170.88
+    username: aurthor
+    password: aurthor2868797
+    port: 5672
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://aurthor:aurthor@localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    hostname: ${APP_HOST:localhost}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 30    #30s客户端没发心跳就剔除
+    lease-renewal-interval-in-seconds: 10       #客户端向服务端发送心跳的时间

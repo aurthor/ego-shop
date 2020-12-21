@@ -1,0 +1,26 @@
+server:
+  port: ${APP_PORT:8761}
+spring:
+  application:
+    name: eureka-server
+  security:   #配置eureka的访问登录用户
+    user:
+      name: aurthor
+      password: aurthor
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://aurthor:aurthor@localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    hostname: ${APP_HOST:localhost}
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    lease-expiration-duration-in-seconds: 30    #30s客户端没发心跳就剔除
+    lease-renewal-interval-in-seconds: 10       #客户端向服务端发送心跳的时间
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'    #暴露的端点放行，例如健康监测的
